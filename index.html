@@ -143,29 +143,111 @@ body{
    MENU
 ===================================== */
 
-.menu{
+/* =====================================
+   MENU DESKTOP
+===================================== */
+
+.desktop-menu{
   display:flex;
   align-items:center;
   gap:35px;
 }
 
-.menu a{
+.desktop-menu a{
   color:white;
   text-decoration:none;
   font-size:22px;
   transition:.3s;
 }
 
-.menu a:hover{
+.desktop-menu a:hover{
   color:var(--yellow);
 }
 
-.menu a.active{
+/* =====================================
+   MENU MOBILE
+===================================== */
+
+.mobile-menu{
+  position:fixed;
+  top:0;
+  right:-100%;
+
+  width:300px;
+  height:100vh;
+
+  background:#07111d;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+
+  gap:30px;
+
+  padding-left:40px;
+
+  transition:.4s;
+
+  z-index:1000;
+
+  box-shadow:-10px 0 30px rgba(0,0,0,.4);
+}
+
+.mobile-menu a{
   color:white;
+  text-decoration:none;
+  font-size:24px;
+  transition:.3s;
 }
 
-.menu a.active:hover{
+.mobile-menu a:hover{
   color:var(--yellow);
+}
+
+.mobile-menu.active{
+  right:0;
+}
+
+/* OVERLAY */
+
+.menu-overlay{
+  position:fixed;
+  inset:0;
+
+  background:rgba(0,0,0,.55);
+
+  opacity:0;
+  pointer-events:none;
+
+  transition:.3s;
+
+  z-index:998;
+}
+
+.menu-overlay.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* RESPONSIVO */
+
+@media(max-width:900px){
+
+  .desktop-menu{
+    display:none;
+  }
+
+}
+
+@media(min-width:901px){
+
+  .mobile-menu,
+  .menu-toggle,
+  .menu-overlay{
+    display:none;
+  }
+
 }
 
 /* =====================================
@@ -453,32 +535,51 @@ footer{
 
   </div>
 
-  <!-- MENU + BOTÃO -->
+ <!-- MENU + BOTÃO -->
 
-  <div class="right-area">
+<div class="right-area">
 
-    <nav class="menu" id="menu">
+  <!-- MENU DESKTOP -->
 
-      <a href="#matriculas">MATRÍCULAS</a>
+  <nav class="menu desktop-menu">
 
-      <a href="#estrutura">ESTRUTURA</a>
+    <a href="#matriculas">MATRÍCULAS</a>
 
-      <a href="#ensino" class="active">
-        ENSINO
-      </a>
+    <a href="#estrutura">ESTRUTURA</a>
 
-    </nav>
+    <a href="#ensino" class="active">
+      ENSINO
+    </a>
 
-    <!-- MENU SANDUÍCHE -->
+  </nav>
 
-    <div class="menu-toggle" id="menuToggle">
+  <!-- MENU MOBILE -->
 
-      <span></span>
-      <span></span>
-      <span></span>
+  <nav class="mobile-menu" id="menu">
 
-    </div>
+    <a href="#sobre">SOBRE</a>
 
+    <a href="#equipe">EQUIPE</a>
+
+    <a href="#localizacao">LOCALIZAÇÃO</a>
+
+    <a href="#galeria">GALERIA DE FOTOS</a>
+
+  </nav>
+
+  <!-- BOTÃO -->
+
+  <div class="menu-toggle" id="menuToggle">
+
+    <span></span>
+    <span></span>
+    <span></span>
+
+  </div>
+
+</div>
+
+<div class="menu-overlay" id="menuOverlay"></div>
   </div>
 
 </header>
@@ -557,17 +658,24 @@ document.getElementById("menuToggle");
 const menu =
 document.getElementById("menu");
 
+const menuOverlay =
+document.getElementById("menuOverlay");
+
+/* ABRIR MENU */
+
 menuToggle.addEventListener("click", () => {
 
   menu.classList.toggle("active");
 
   menuToggle.classList.toggle("active");
 
+  menuOverlay.classList.toggle("active");
+
 });
 
-/* FECHAR MENU AO CLICAR */
+/* FECHAR AO CLICAR NOS LINKS */
 
-document.querySelectorAll(".menu a")
+document.querySelectorAll(".mobile-menu a")
 .forEach(link => {
 
   link.addEventListener("click", () => {
@@ -576,7 +684,21 @@ document.querySelectorAll(".menu a")
 
     menuToggle.classList.remove("active");
 
+    menuOverlay.classList.remove("active");
+
   });
+
+});
+
+/* FECHAR AO CLICAR FORA */
+
+menuOverlay.addEventListener("click", () => {
+
+  menu.classList.remove("active");
+
+  menuToggle.classList.remove("active");
+
+  menuOverlay.classList.remove("active");
 
 });
 
