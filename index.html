@@ -135,10 +135,44 @@ body{
    MENU
 ===================================== */
 
+css id="y3w1ns"
 .menu{
   display:flex;
   align-items:center;
   gap:35px;
+}
+
+@media(max-width:900px){
+
+  .menu{
+    position:fixed;
+    top:0;
+    right:-100%;
+
+    width:300px;
+    height:100vh;
+
+    background:#07111d;
+
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-start;
+
+    padding-left:40px;
+
+    transition:.4s;
+
+    box-shadow:-10px 0 30px rgba(0,0,0,.4);
+  }
+
+  .menu a{
+    font-size:24px;
+  }
+
+  .menu.active{
+    right:0;
+  }
+
 }
 
 .menu a{
@@ -461,7 +495,18 @@ footer{
 
       <a href="#ensino" class="active">
         ENSINO
+
       </a>
+        
+      <a href="#sobre">SOBRE</a>
+
+      <a href="#equipe">EQUIPE</a>
+
+      <a href="#localizacao">LOCALIZAÇÃO</a>
+
+      <a href="#galeria">GALERIA DE FOTOS</a>
+
+      
 
     </nav>
 
